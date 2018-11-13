@@ -97,7 +97,7 @@ export default {
 </script>
 <style scoped>
 #first-video {
-  /* object-fit: scale-down; */
+  object-fit: scale-down;
 }
 .container {
   position: fixed;
