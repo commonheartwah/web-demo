@@ -18,5 +18,8 @@
   "homepage": "https://github.com/commonheartwah/web-demo#readme",
   "dependencies": {
     "html2canvas": "^1.0.0-alpha.12"
+  },
+  "devDependencies": {
+    "json-server": "^0.14.0"
   }
 }
