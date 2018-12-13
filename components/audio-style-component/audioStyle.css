@@ -1,0 +1,16 @@
+.audio{width: 100%;text-align: center;}
+.audio .top-content{height: 1rem;line-height: 1rem;}
+.audio .top-content .current-time{display: inline-block;vertical-align: text-bottom;color: #8B8B8B;font-size: 0.5rem;font-family: Helvetica;}
+.audio .top-content .progress{border-radius: 0.5rem;display: inline-block;position: relative;margin: 0rem 0.4rem 0.25rem 0.4rem;width: 70%;background-color: #eee;}
+.audio .top-content .progress .progress-circular{left: -1.4%;background-image: url(./audioImage/audio-process-btn.png?v=836ee753b6);display: inline-block;width: 1.1rem;height: 1.1rem;background-repeat: no-repeat;background-size: 100%;position: absolute;top: -0.4rem;}
+.audio .top-content .progress .progress-bar{position: relative; width: 0rem;height: 0.15rem;background-color: #FFD804;border-radius: 1rem;}
+.audio .top-content .remaining-time{display: inline-block;vertical-align: text-bottom;color: #8B8B8B;font-size: 0.5rem;}
+.audio .bottom-content{padding: 1rem;text-align: center;height: 4.5rem;line-height: 4.5rem;}
+.audio .bottom-content .last-btn{background-image: url(./audioImage/audio-last-icon-ok.png?v=836ee753b7);display: inline-block;width: 1rem;height: 1rem;background-repeat: no-repeat;background-size: 100%;}
+.audio .bottom-content .last-btn.cancle{background-image: url(./audioImage/audio-last-icon-cancle.png?v=836ee753b8);}
+.audio .bottom-content .play-btn{display: inline-block;margin: 0 1rem;}
+.audio .bottom-content .play-btn .bottom-icon{background-image: url(./audioImage/audio-round-bottom.png?v=836ee753b9);display: inline-block;width: 4.5rem;height: 4.5rem;background-repeat: no-repeat;background-size: 100%;}
+.audio .bottom-content .play-btn .bottom-icon .play-or-pause-icon{background-image: url(./audioImage/audio-play-icon.png?v=836ee753b0);display: inline-block;width: 1rem;height: 1rem;background-repeat: no-repeat;background-size: 100%;}
+.audio .bottom-content .play-btn .bottom-icon .play-or-pause-icon.pause{background-image: url(./audioImage/audio-pause-icon.png?v=836ee753b1);}
+.audio .bottom-content .next-btn{background-image: url(./audioImage/audio-next-icon-ok.png?v=836ee753b2);display: inline-block;width: 1rem;height: 1rem;background-repeat: no-repeat;background-size: 100%;}
+.audio .bottom-content .next-btn.cancle{background-image: url(./audioImage/audio-next-icon-cancle.png?v=836ee753b3);}
