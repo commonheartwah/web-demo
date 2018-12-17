@@ -1,10 +1,6 @@
 import '../../css/audioStyle.css'
-/**
- * 使用方法 new({
- *              appNode : 在哪插入这个组件,
- *              audioList : [] // 音频src 数组结构
- *            })
- */
+import popup from "../popup/popup_new";
+
 class AudioStyle {
 
     constructor(option){
@@ -12,7 +8,8 @@ class AudioStyle {
         let el = document.createElement('div');
         el.className = 'audio';
         el.style.width = '100%';
-        el.innerHTML = `<div class="top-content">
+        el.innerHTML = `<div class='audio-title' id='audio-title'></div>
+                        <div class="audio-top-content">
                             <div class="current-time" id="audio-current-time">00:00</div>
                             <div class="progress" id="audio-progress-bar">
                                 <div class="progress-circular" id="audio-progress-circular"></div>
@@ -21,7 +18,7 @@ class AudioStyle {
                             </div>
                             <div class="remaining-time" id="audio-remaining-time">00:00</div>
                         </div>
-                        <div class="bottom-content">
+                        <div class="audio-bottom-content">
                             <div class="last-btn" id="audio-last"></div>
                             <div class="play-btn">
                                 <div class="bottom-icon">
@@ -35,8 +32,9 @@ class AudioStyle {
     };
 
     // 设置audio的url
-    setAudioUrl(url) {
-        document.getElementById('audio-component').src=url;
+    setAudioUrl(info) {
+        document.getElementById('audio-component').src = info.url;
+        document.getElementById('audio-title').innerHTML = info.title || '';
     };
 
     // 停止播放
@@ -46,7 +44,11 @@ class AudioStyle {
 
     // 开始播放
     playAudio(){
-        document.getElementById('audio-component').play();
+        if(document.getElementById('audio-component').src){
+            document.getElementById('audio-component').play();
+        }else{
+            popup.toast({msg : '音频url出问题了,请后退重试'});
+        }
     };
 
     // 音频一些信息
@@ -61,17 +63,16 @@ class AudioStyle {
 
     // 音频播放时间换算 
     transTime(value){
-        var time = "";
-        var h = parseInt(value / 3600);
+        let time = "";
+        let h = parseInt(value / 3600);
         value %= 3600;
-        var m = parseInt(value / 60);
-        var s = parseInt(value % 60);
+        let m = parseInt(value / 60);
+        let s = parseInt(value % 60);
         if (h > 0) {
             time = this.formatTime(h + ":" + m + ":" + s);
         } else {
             time = this.formatTime(m + ":" + s);
         }
-
         return time;
     }
 
@@ -91,7 +92,6 @@ class AudioStyle {
 
     // 主控区
     playCotrol(option) {
-
         let audioIndex = 0; // 传过来的音频数组标记
         let flag = true; // 开始播放和暂停播放按钮的显示标记
         let audioCurrentTime = document.getElementById('audio-current-time'); // 当前播放时间
@@ -106,6 +106,7 @@ class AudioStyle {
         let x1,x2,oriOffestLeft,maxLeft,maxRight;// 拖拽进度条上的小球时变量
         let widthBar = audioProgressBar.offsetWidth; // 进度条的宽度
         let flagDrop = false; // 是否可拖拽
+        let audioBtnIndex;
 
         // 安卓切换后台音频暂停
         bind_trigger('pauseHTML',(res)=>{
@@ -114,7 +115,7 @@ class AudioStyle {
 
         // 初始化 上一曲 下一曲 按钮的显示状态
         if(option.audioList.length>0){
-            this.setAudioUrl(option.audioList[1]);
+            this.setAudioUrl(option.audioList[0]);
             if(option.audioList.length==1){
                 audioLast.classList.add('cancle');
                 audioNext.classList.add('cancle');
@@ -124,52 +125,78 @@ class AudioStyle {
             }
         }
 
+        // 按钮展示
+        let lastAndNextBtn = function(){
+            for(let i=0;i<option.audioList.length;i++){
+                if(audio.src == option.audioList[i].url){
+                    audioBtnIndex = i;
+                }
+            }
+        }
+
         // 播放按钮点击
         playOrPause.addEventListener("click", (e) => {
             e.preventDefault();
-            if(flag){
-                this.playAudio();
-                playOrPause.classList.add('pause');
-                flag = false;
+            if(audio.src){
+                if(flag){
+                    this.playAudio();
+                    playOrPause.classList.add('pause');
+                    flag = false;
+                }else{
+                    this.stopAudio();
+                    playOrPause.classList.remove('pause');
+                    flag = true;
+                }
             }else{
-                this.stopAudio();
-                playOrPause.classList.remove('pause');
-                flag = true;
+                popup.toast({msg : '音频url出问题了,请后退重试'});
             }
+            
         }, false);
 
         // 上一曲按钮点击并播放
         audioLast.addEventListener("click", (e) => {
             e.preventDefault();
+            lastAndNextBtn();
+            audioIndex == audioBtnIndex ? audioIndex = audioIndex  : audioIndex = audioBtnIndex;
             audioIndex--;
             if(audioIndex<0) return false;
             if(option.audioList.length == 1 && audioIndex > option.audioList.length -1){
                 audioIndex = 0;
-            }else if(audioIndex > option.audioList.length -1 && option.audioList.length > 1){
-                audioIndex = option.audioList.length -1;
+            }else if(audioIndex > option.audioList.length -1 && option.audioList.length == 2){
+                audioIndex = 0;
+            }else if(audioIndex > option.audioList.length -1 && option.audioList.length > 2){
+                audioIndex = option.audioList.length -2;
             }
             this.stopAudio();
             this.setAudioUrl(option.audioList[audioIndex]);
             let index;
             for(let i=0;i<option.audioList.length;i++){
-                if(audio.src==option.audioList[i]){
+                if(audio.src==option.audioList[i].url){
                     index = i;
                 }
             }
-            if(index<=0){
+            if(option.audioList.length == 2){
                 audioLast.classList.add('cancle');
-            }else{
                 audioNext.classList.remove('cancle');
-                audioLast.classList.remove('cancle');
+            }else{
+                if(index<=0){
+                    audioLast.classList.add('cancle');
+                }else{
+                    audioNext.classList.remove('cancle');
+                    audioLast.classList.remove('cancle');
+                }
             }
             audioProgressBarRealtime.style.width = '0rem';
-            audioProgressCircular.style.left = '-1.4%';
+            audioProgressCircular.style.left = '-3%';
             this.playAudio();
+            option.lastAudio && option.lastAudio(audioIndex);
         }, false);
 
         // 下一曲按钮点击并播放
         audioNext.addEventListener("click", (e) => {
             e.preventDefault();
+            lastAndNextBtn();
+            audioIndex == audioBtnIndex ? audioIndex = audioIndex  : audioIndex = audioBtnIndex;
             audioIndex++;
             if( audioIndex>option.audioList.length - 1) return false;
             if(option.audioList.length == 1 && audioIndex < 0){
@@ -181,19 +208,26 @@ class AudioStyle {
             this.setAudioUrl(option.audioList[audioIndex]);
             let index;
             for(let i=0;i<option.audioList.length;i++){
-                if(audio.src==option.audioList[i]){
+                if(audio.src==option.audioList[i].url){
                     index = i;
                 }
             }
-            if(index>=option.audioList.length - 1){
+            if(option.audioList.length == 2){
                 audioNext.classList.add('cancle');
-            }else{
                 audioLast.classList.remove('cancle');
-                audioNext.classList.remove('cancle');
+            }else{
+                if(index>=option.audioList.length - 1){
+                    audioNext.classList.add('cancle');
+                }else{
+                    audioLast.classList.remove('cancle');
+                    audioNext.classList.remove('cancle');
+                }
             }
             audioProgressBarRealtime.style.width = '0rem';
-            audioProgressCircular.style.left = '-1.4%';
+            audioProgressCircular.style.left = '-3%';
             this.playAudio();
+            option.nextAudio && option.nextAudio(audioIndex);
+
         }, false);
 
         // 音频播放时 播放时间和进度条控制
@@ -206,13 +240,17 @@ class AudioStyle {
                 playOrPause.classList.add('pause');
             }
             audioProgressBarRealtime.style.width = audio.currentTime / audio.duration * 100 - 0 + '%';
-            audioProgressCircular.style.left = audio.currentTime / audio.duration * 100 - 1.4 + '%';
+            audioProgressCircular.style.left = audio.currentTime / audio.duration * 100 - 2.5 + '%';
         },false);
 
         // 音频准备OK 设置总时间以及取到总时长
         audio.addEventListener("canplay", (e) => {
             e.preventDefault();
-            audioRemainingTime.innerHTML = this.transTime(audio.duration);
+            if(audio.duration == Infinity){
+                audioRemainingTime.innerHTML = '00:01';
+            }else{
+                audioRemainingTime.innerHTML = this.transTime(audio.duration);
+            }
         },false);
 
         // 音频播放完毕 循环播放当前音频
