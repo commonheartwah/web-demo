@@ -1,5 +1,5 @@
 1. 根据master 新建自己的分支
-- git checkout xxx master -b
+- git checkout -b xxx master 
 2. 拉去远程分支
 - git fetch
 3. 删除本地分支
