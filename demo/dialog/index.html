@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/dialog.css">
+    <script type="text/javascript" src="js/flexible.js"></script>
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <title>dailog</title>
+</head>
+<body>
+<div style="text-align:center;">
+	<button>删除</button> <button>提示</button>
+	<button>提醒</button>
+</div>
+
+<script type="text/javascript">
+ 	document.getElementsByTagName('button')[0].onclick=function(){
+ 		var d = new Dialog('确定删除该宝贝吗？',{
+			onConfrim:function(){
+				console.log(333)
+			}
+		});
+ 	}
+
+	document.getElementsByTagName('button')[1].onclick=function(){
+ 		Dialog.tips('密码格式不符合要求')
+ 	}
+
+ 	document.getElementsByTagName('button')[2].onclick=function(){
+ 		var d = new Dialog('请阅读协议',{
+			onlyConfirm:true
+		});
+ 	}
+	 
+</script>
+</body>
+</html>
