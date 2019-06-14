@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>h5上传图片</title>
+    <link rel="stylesheet" href="./img.css">
+
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>
+
+<script>
+    // 初始化图片上传
+    function initImg() {
+        let weixinCamera = document.createElement('DIV');
+        weixinCamera.className = 'parent-file';
+
+        let boxFile = document.createElement('DIV');
+        boxFile.className = 'box-file';
+
+        let fileImg = document.createElement('INPUT');
+        fileImg.type = 'file';
+        fileImg.id = 'fileImg';
+        fileImg.accept = 'image/*';
+
+        let introduction = document.createElement('DIV');
+        introduction.className = 'introduction';
+        let introduceText = document.createTextNode('最多支持上传3张图片');
+        introduction.appendChild(introduceText);
+
+        let submitApp = document.createElement('DIV');
+        submitApp.className = 'font-words';
+        submitApp.id = 'submitApp';
+        let subText = document.createTextNode('提交图片');
+        submitApp.appendChild(subText);
+
+        let contentImg = document.createElement('DIV');
+        contentImg.id = 'contentImg';
+
+        boxFile.appendChild(fileImg);
+
+        weixinCamera.appendChild(boxFile);
+        weixinCamera.appendChild(introduction);
+        weixinCamera.appendChild(submitApp);
+        weixinCamera.appendChild(contentImg);
+
+        // 在微信中隐藏自带上传图片样式，显示新的组件
+        // let venusDefultCamera = document.getElementsByClassName('textc');
+        // venusDefultCamera[0].style.display = 'none';
+        // let venusCameraContainer = document.getElementsByClassName('v-ui-camera');
+        let venusCameraContainer = document.getElementsByClassName('box');
+        venusCameraContainer[0].appendChild(weixinCamera);
+    }
+
+    // 图片上传方法
+    function submit() {
+        let fileTag = document.getElementById('fileImg');
+        let imgParentNode = document.getElementById('contentImg');
+        fileTag.onchange = function () {
+            let imgSum = document.getElementsByClassName('img');
+            if (imgSum.length >= 3 && imgSum) {
+                popup.toast({
+                    msg: '最多支持上传3张图片'
+                });
+            } else {
+                let file = fileTag.files[0];
+                let fileReader = new FileReader();
+                fileReader.onloadend = function () {
+                    if (fileReader.readyState == fileReader.DONE) {
+                        let DIV_PARENT = document.createElement('DIV');
+                        let DIV_CHILD_CLOSE = document.createElement('DIV');
+                        let IMG = document.createElement('IMG');
+                        IMG.className = 'img';
+                        DIV_CHILD_CLOSE.className = 'close';
+                        DIV_PARENT.className = 'imgListDiv';
+                        IMG.src = fileReader.result;
+                        DIV_PARENT.appendChild(IMG);
+                        DIV_PARENT.appendChild(DIV_CHILD_CLOSE);
+                        imgParentNode.appendChild(DIV_PARENT);
+
+                        DIV_PARENT.onclick = function () {
+                            DIV_PARENT.parentNode.removeChild(DIV_PARENT);
+                        };
+                    }
+                };
+                fileReader.readAsDataURL(file);
+            }
+        };
+        let submitApp = document.getElementById('submitApp');
+        submitApp.onclick = function () {
+            let list = document.getElementsByClassName('img');
+            let srcList = []; // 存储的图片本地路径的url
+            for (let i = 0; i < list.length; i++) {
+                srcList.push(list[i].src);
+            }
+
+            // 以下开始调取上传图片接口 上传成功后  之后移除imgs 
+            setTimeout(() => {
+                let imgListDiv1 = document.getElementById('contentImg');
+                for (let i = imgListDiv1.childNodes.length - 1; i >= 0; i--) {
+                    imgListDiv1.removeChild(imgListDiv1.childNodes[i]);
+                }
+            }, 2000);
+        };
+    }
+    
+    let ua = navigator.userAgent.toLowerCase();
+    let weiChat = ua.match(/MicroMessenger/i) == 'micromessenger';
+    if (weiChat || true) {
+        setTimeout(() => {
+            this.initImg();
+            this.submit();
+        }, 0);
+    }
+</script>

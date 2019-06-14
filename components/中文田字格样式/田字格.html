@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>用DIV做成一个田</title>
+<style>
+    .main-contents .dictationWords{}
+    .main-contents .dictationWords .top-words{}
+    .main-contents .dictationWords .contents{}
+    .main-contents .dictationWords .contents .content-detail{}
+    .main-contents .dictationWords .contents .content-detail .contents-title{}
+    .main-contents .dictationWords .contents .content-detail .contents-title-left{}
+    .main-contents .dictationWords .contents .content-detail .box-ul{}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li{list-style: none;border: 0.05rem solid #81CEB2;   height: 2.215rem;display: inline-block; border-radius: 0.1rem;}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz{width: 2.215rem;height: 2.215rem;border-right: 0.05rem solid #81CEB2;position: relative;float: left;}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .border-right-none{border-right: none;}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz .s1{width: 1.08rem;height: 1.02rem;float: left;border-bottom: 0.05rem dashed #81CEB2;border-right: 0.05rem dashed #81CEB2;background:rgba(129,206,178,0.08);}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz .s2{width: 1.085rem;height: 1.02rem;float: left;border-bottom: 0.05rem dashed #81CEB2;background:rgba(129,206,178,0.08);}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz .s3{width: 1.08rem;height: 1.15rem;float: left;border-right: 0.05rem dashed #81CEB2;background:rgba(129,206,178,0.08);}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz .s4{width: 1.085rem;height: 1.15rem;float: left;background:rgba(129,206,178,0.08);}
+    .main-contents .dictationWords .contents .content-detail .box-ul .box-li .zz .words{position: absolute;font-size: 1.6rem;left: 50%;top: 50%;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);}
+    .aaa{width:22px;
+height:61px;
+background:linear-gradient(180deg,rgba(173,226,255,1) 0%,rgba(132,199,255,1) 100%);
+box-shadow:0px -5px 15px 0px rgba(62,145,197,0);
+border-radius:11px;}
+</style>
+</head>
+<body>
+    <div class="main-contents">
+        <div class="dictationWords">
+            <div class="top-words">请检查字词书写正误，纠正并多练习几遍哦。</div>
+            <div class="contents">
+                <div class="content-detail">
+                    <div class="contents-title">古诗三首</div>
+                    <div class="new-words">
+                        <div class="contents-title-left">生字听写</div>
+                        <ul class="box-ul">
+                            <li class="box-li">
+                                <div class="zz border-right-none">
+                                    <div class="s1"></div>
+                                    <div class="s2"></div>
+                                    <div class="s3"></div>
+                                    <div class="s4"></div>
+                                    <div class="words">你</div>
+                                </div>
+                            </li>
+                            <li class="box-li">
+                                
+                                <div class="zz border-right-none">
+                                    <div class="s1"></div>
+                                    <div class="s2"></div>
+                                    <div class="s3"></div>
+                                    <div class="s4"></div>
+                                    <div class="words">你</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="terms">
+                        <div class="contents-title">词语听写</div>
+                        <ul class="box-ul">
+                            <li class="box-li">
+                                <div class="zz border-right-none">
+                                    <div class="s1"></div>
+                                    <div class="s2"></div>
+                                    <div class="s3"></div>
+                                    <div class="s4"></div>
+                                    <div class="words">你</div>
+                                </div>
+                            </li>
+                            <li class="box-li">
+                                <div class="zz">
+                                    <div class="s1"></div>
+                                    <div class="s2"></div>
+                                    <div class="s3"></div>
+                                    <div class="s4"></div>
+                                    <div class="words">你</div>
+                                </div>
+                                <div class="zz border-right-none">
+                                    <div class="s1"></div>
+                                    <div class="s2"></div>
+                                    <div class="s3"></div>
+                                    <div class="s4"></div>
+                                    <div class="words">你</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aaa"></div>
+</body>
+</html>
