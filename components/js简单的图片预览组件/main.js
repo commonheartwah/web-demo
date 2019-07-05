@@ -8,7 +8,7 @@ function previewImgs(option){
                 var temp = this.src;
                 console.log(this)
                 var objE = document.createElement("div");
-                objE.innerHTML = '<div class="bgM" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(0,0,0,0.85);overflow: hidden;"">' + 
+                objE.innerHTML = '<div class="bgM" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(0,0,0,0.85);overflow: hidden;">' + 
                 '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 2rem;z-index:2001;">'+
                 index+'/</span>'+
                 '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 1.5rem;z-index:2001;">'+
