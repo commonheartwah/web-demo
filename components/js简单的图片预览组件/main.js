@@ -1,20 +1,17 @@
-function previewImgs(option){
+function initPreviewImg(option){
     for(var i=0;i<option.length;i++){
-
         (function(){
             let index = i+1;
-
             option[i].onclick = function() {
                 var temp = this.src;
-                console.log(this)
                 var objE = document.createElement("div");
                 objE.innerHTML = '<div class="bgM" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(0,0,0,0.85);overflow: hidden;">' + 
-                '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 2rem;z-index:2001;">'+
-                index+'/</span>'+
-                '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 1.5rem;z-index:2001;">'+
-                option.length+'</span>'+
-                '<img src="'+temp+'"  id="img_scan" class="img-custom-img2" style="width: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;z-index: 1001;margin: auto;" />' +
-                '</div>';
+                    '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 2rem;z-index:2001;">'+
+                    index+'/</span>'+
+                    '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 1.5rem;z-index:2001;">'+
+                    option.length+'</span>'+
+                    '<img src="'+temp+'"  id="img_scan" class="img-custom-img2" style="width: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;z-index: 1001;margin: auto;" />' +
+                    '</div>';
                 document.body.appendChild(objE.children[0]);
                 //退出图片预览事件
                 var $bg = document.querySelector(".bgM");
@@ -32,23 +29,23 @@ function previewImgs(option){
                 createEvent();//自定义事件
                 previewImg();//图片预览事件监听
             }
-        })()
-    
+        })();
+    }
 }
+
 /*
- *  自定义移动端手势事件  
- *  事件：
- *  - gesturestart      手势事件开始
- *  - gesturechange     手势缩放
- *  - gestureend        手势事件结束
- *  - swipeMove         单指滑动
- *  - doubleTouch       双击
- *  - oneTouch          单击
- */
+*  自定义移动端手势事件  
+*  事件：
+*  - gesturestart      手势事件开始
+*  - gesturechange     手势缩放
+*  - gestureend        手势事件结束
+*  - swipeMove         单指滑动
+*  - doubleTouch       双击
+*  - oneTouch          单击
+*/
 function createEvent(){
 
     var $bm = document.querySelector(".bgM");
-    //
     var isTouch = false;
     var isDoubleTouch = false; //是否为多触点   
     var start = []; //存放触点坐标
@@ -63,10 +60,9 @@ function createEvent(){
     var doubleTouch = new CustomEvent("doubleTouch");
     var oneTouch = new CustomEvent("oneTouch");
 
-
     //监听touchstart事件
     $bm.addEventListener('touchstart', function(e) {
-        //e.preventDefault();
+        // e.preventDefault();
         if (e.touches.length >= 2) { //判断是否有两个点在屏幕上
             isDoubleTouch = true;
             start = e.touches; //得到第一组两个点
@@ -119,36 +115,38 @@ function createEvent(){
             e.target.dispatchEvent(gestureend);
         };
     }, false);
-    /*
-     * 两点的距离
-     */
-    function getDistance(p1, p2) {
-        var x = p2.pageX - p1.pageX,
-            y = p2.pageY - p1.pageY;
-        return Math.sqrt((x * x) + (y * y));
-    };
-    /*
-     * 两点的夹角
-     */
-    function getAngle(p1, p2) {
-        var x = p1.pageX - p2.pageX,
-            y = p1.pageY - p2.pageY;
-        return Math.atan2(y, x) * 180 / Math.PI;
-    };
-    /*
-     * 获取中点 
-     */
-    function getMidpoint(p1, p2) {
-        var x = (p1.pageX + p2.pageX) / 2,
-            y = (p1.pageY + p2.pageY) / 2;
-        return [x, y];
-    }
-
 }
 
 /*
- * 事件处理
- */
+* 两点的距离
+*/
+function getDistance(p1, p2) {
+    var x = p2.pageX - p1.pageX,
+        y = p2.pageY - p1.pageY;
+    return Math.sqrt((x * x) + (y * y));
+};
+
+ /*
+* 两点的夹角
+*/
+function getAngle(p1, p2) {
+    var x = p1.pageX - p2.pageX,
+        y = p1.pageY - p2.pageY;
+    return Math.atan2(y, x) * 180 / Math.PI;
+};
+
+/*
+* 获取中点 
+*/
+function getMidpoint(p1, p2) {
+    var x = (p1.pageX + p2.pageX) / 2,
+        y = (p1.pageY + p2.pageY) / 2;
+    return [x, y];
+}
+
+/*
+* 事件处理
+*/
 function  previewImg() {
 
     var $imgs = document.querySelector("#img_scan");
@@ -179,7 +177,6 @@ function  previewImg() {
     }
 
     function gesturef(event) {
-
         switch (event.type) {
             case "gesturestart":
                 var x = event.midPoint[0];
@@ -199,7 +196,7 @@ function  previewImg() {
             case "gestureend":
                 maxMove();
                 break;
- 
+
             case "swipeMove":
                 if (!maxSwipeLeft || !maxSwipeRight || !maxSwipeTop || !maxSwipeBottom) return;
                 if (event.distance[0] > 0 && maxSwipeLeft < tMatrix[4]) return;
@@ -229,7 +226,6 @@ function  previewImg() {
                 document.body.removeChild($bg);
                 break;
         }
-        }
-
     }
+
 }
