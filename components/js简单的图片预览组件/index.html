@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<title>手势</title>	
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+	<h4>点击图片预览</h4>
+	<img class="img1 preview" src="http://pic37.nipic.com/20140113/8800276_184927469000_2.png" alt="">
+	<img class="img1 preview" src="http://img.redocn.com/sheji/20141219/zhongguofengdaodeliyizhanbanzhijing_3744115.jpg" alt="">
+</body>
+<script src="main.js"></script>
+</html>
+<script>
+window.onload = function() {
+    //点击图片进入预览
+    var $Dom = document.getElementsByClassName("preview");
+    previewImgs($Dom);
+    
+};
+</script>
