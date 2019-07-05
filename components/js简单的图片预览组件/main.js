@@ -5,7 +5,7 @@ function initPreviewImg(option){
             option[i].onclick = function() {
                 var temp = this.src;
                 var objE = document.createElement("div");
-                objE.innerHTML = '<div class="bgM" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(0,0,0,0.85);overflow: hidden;">' + 
+                objE.innerHTML = '<div class="bgM" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(0,0,0,1);overflow: hidden;">' + 
                     '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 2rem;z-index:2001;">'+
                     index+'/</span>'+
                     '<span style="color:#fff;display: inline-block;margin-top: 1rem;position: fixed;right: 1.5rem;z-index:2001;">'+
@@ -23,7 +23,9 @@ function initPreviewImg(option){
                 var $img = document.querySelector(".img-custom-img2");
     
                 $img.onclick = function(event) {
-                    event.stopPropagation();
+                    // event.stopPropagation();
+                    var dm = document.querySelector(".bgM");
+                    document.body.removeChild(dm);
                 }
     
                 createEvent();//自定义事件
